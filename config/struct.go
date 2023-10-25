@@ -4,8 +4,8 @@ var Config config
 
 type config struct {
 	DATA struct {
-		Host     string `yaml:"Host"`
-		Port     int    `yaml:"Port"`
+		Host     string `yaml:"Host" ant:"addr_ipv4"`
+		Port     int    `yaml:"Port" ant:"port"`
 		User     string `yaml:"User"`
 		Pass     string `yaml:"Pass"`
 		Database string `yaml:"Database"`

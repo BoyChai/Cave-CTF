@@ -5,6 +5,7 @@ go 1.19
 require github.com/spf13/viper v1.17.0
 
 require (
+	github.com/BoyChai/Ant v0.0.0-20230531093241-6df0be20bb24 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/magiconair/properties v1.8.7 // indirect

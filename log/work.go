@@ -1,7 +1,6 @@
 package log
 
 import (
-	"Cave-CTF/config"
 	"fmt"
 	"time"
 )
@@ -9,7 +8,6 @@ import (
 var piping chan info
 
 func init() {
-	config.Config.Read()
 	day = time.Now().YearDay()
 	logFileName = "cave.log"
 	piping = make(chan info)

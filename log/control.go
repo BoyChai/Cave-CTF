@@ -16,7 +16,61 @@ func NewLog(level Level, code Code, err error, msg string) {
 		Msg:   msg,
 		Date:  time.Now(),
 	}
-
+	piping <- data
+}
+func NewDebugLog(code Code, err error, msg string) {
+	data := info{
+		Is:    true,
+		Level: DEBUG,
+		Code:  code,
+		Err:   err,
+		Msg:   msg,
+		Date:  time.Now(),
+	}
+	piping <- data
+}
+func NewInfoLog(code Code, err error, msg string) {
+	data := info{
+		Is:    true,
+		Level: INFO,
+		Code:  code,
+		Err:   err,
+		Msg:   msg,
+		Date:  time.Now(),
+	}
+	piping <- data
+}
+func NewWarningLog(code Code, err error, msg string) {
+	data := info{
+		Is:    true,
+		Level: WARNING,
+		Code:  code,
+		Err:   err,
+		Msg:   msg,
+		Date:  time.Now(),
+	}
+	piping <- data
+}
+func NewErrorLog(code Code, err error, msg string) {
+	data := info{
+		Is:    true,
+		Level: ERROR,
+		Code:  code,
+		Err:   err,
+		Msg:   msg,
+		Date:  time.Now(),
+	}
+	piping <- data
+}
+func NewCriticalLog(code Code, err error, msg string) {
+	data := info{
+		Is:    true,
+		Level: CRITICAL,
+		Code:  code,
+		Err:   err,
+		Msg:   msg,
+		Date:  time.Now(),
+	}
 	piping <- data
 }
 

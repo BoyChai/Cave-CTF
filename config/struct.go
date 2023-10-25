@@ -10,4 +10,7 @@ type config struct {
 		Pass     string `yaml:"Pass"`
 		Database string `yaml:"Database"`
 	}
+	Log struct {
+		Path string `yaml:"Path"`
+	}
 }

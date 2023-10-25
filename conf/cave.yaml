@@ -4,3 +4,5 @@ Data:
   User: "cave"
   Pass: "12345678"
   Database: "cave"
+Log:
+  Path: ./log/

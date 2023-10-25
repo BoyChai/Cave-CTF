@@ -24,7 +24,7 @@ func (d *dao) DeleteUsers(id int) error {
 	return nil
 }
 
-// DeleteFlag  创建用户
+// DeleteFlag  删除成绩
 func (d *dao) DeleteFlag(id int) error {
 	flag := Ranking{
 		ID: uint(id),

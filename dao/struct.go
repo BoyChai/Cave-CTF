@@ -11,7 +11,7 @@ var db *gorm.DB
 
 // QuestionList 题目表
 type QuestionList struct {
-	ID       uint   `gorm:"primaryKey;auto_increment"`
+	ID       uint   `gorm:"primaryKey;auto_increment" form:"name"`
 	Title    string `form:"title"`
 	Describe string `form:"describe"`
 	Flag     string `form:"flag"`
@@ -22,15 +22,15 @@ type QuestionList struct {
 
 // Users 用户表
 type Users struct {
-	ID    uint `gorm:"primaryKey;auto_increment"`
-	Name  string
-	Score string
+	ID    uint   `gorm:"primaryKey;auto_increment" form:"name"`
+	Name  string `form:"name"`
+	Score string `form:"score"`
 }
 
 // Ranking 成绩表
 type Ranking struct {
-	ID            uint `json:"ID,omitempty;auto_increment"`
-	User          string
-	Score         string
-	QuestionTitle string
+	ID            uint   `json:"ID,omitempty;auto_increment" form:"name"`
+	User          string `form:"user"`
+	Score         string `form:"score"`
+	QuestionTitle string `form:"question"`
 }

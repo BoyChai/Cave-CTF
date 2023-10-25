@@ -1,5 +1,15 @@
 package dao
 
+// FindQuestion 查询单个题目
+func (d *dao) FindQuestion(id int) (error, QuestionList) {
+	var Question QuestionList
+	tx := db.First(&Question, id)
+	if tx.Error != nil {
+		return tx.Error, QuestionList{}
+	}
+	return nil, Question
+}
+
 // FindQuestionList 查询题目
 func (d *dao) FindQuestionList() (error, []QuestionList) {
 	var list []QuestionList

@@ -33,7 +33,8 @@ func work() {
 	case CRITICAL:
 		level = "CRITICAL"
 	}
-	str := fmt.Sprintf("[Cave-CTF] %s Code:%d Msg:%s Error:%s\n",
+	str := fmt.Sprintf("[Cave-CTF] %s %s Code:%d Msg:%s Error:%s\n",
+		data.Date.Format("2006-01-02 15:04:05"),
 		level,
 		data.Code,
 		data.Msg,

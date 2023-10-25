@@ -1,33 +1,31 @@
 package dao
 
-import "fmt"
-
 // FindQuestionList 查询题目
-func (d *dao) FindQuestionList() []QuestionList {
+func (d *dao) FindQuestionList() (error, []QuestionList) {
 	var list []QuestionList
 	r := db.Find(&list)
 	if r.Error != nil {
-		fmt.Println(r.Error.Error())
+		return r.Error, nil
 	}
-	return list
+	return nil, list
 }
 
 // FindUser 查询所有用户
-func (d *dao) FindUser() []Users {
+func (d *dao) FindUser() (error, []Users) {
 	var list []Users
 	r := db.Find(&list)
 	if r.Error != nil {
-		fmt.Println(r.Error.Error())
+		return r.Error, nil
 	}
-	return list
+	return nil, list
 }
 
 // FindRanking 查询成绩
-func (d *dao) FindRanking() []Ranking {
+func (d *dao) FindRanking() (error, []Ranking) {
 	var list []Ranking
 	r := db.Find(&list)
 	if r.Error != nil {
-		fmt.Println(r.Error.Error())
+		return r.Error, nil
 	}
-	return list
+	return nil, list
 }

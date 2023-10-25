@@ -1,9 +1,13 @@
 package dao
 
-func (d *dao) Score(id int, Score string) {
+func (d *dao) Score(id int, Score string) error {
 	user := Users{
 		ID:    uint(id),
 		Score: Score,
 	}
-	db.Save(&user)
+	tx := db.Save(&user)
+	if tx.Error != nil {
+		return tx.Error
+	}
+	return nil
 }

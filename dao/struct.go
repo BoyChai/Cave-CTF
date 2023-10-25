@@ -11,13 +11,13 @@ var db *gorm.DB
 
 // QuestionList 题目表
 type QuestionList struct {
-	ID       uint `gorm:"primaryKey;auto_increment"`
-	Title    string
-	Describe string
-	Flag     string
-	Type     string
-	Annex    string
-	Score    string
+	ID       uint   `gorm:"primaryKey;auto_increment"`
+	Title    string `form:"title"`
+	Describe string `form:"describe"`
+	Flag     string `form:"flag"`
+	Type     string `form:"type"`
+	Annex    string `form:"annex"`
+	Score    string `form:"score"`
 }
 
 // Users 用户表

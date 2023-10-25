@@ -1,14 +1,18 @@
 package main
 
 import (
-	"Cave-CTF/log"
-	"errors"
-	"fmt"
-	"time"
+	"Cave-CTF/config"
+	"Cave-CTF/controller"
+	"Cave-CTF/dao"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	fmt.Println("Hello,Cave-CTF")
-	log.NewLog(log.DEBUG, 200, errors.New("tes"), "sss")
-	time.Sleep(1 * time.Second)
+
+	config.Config.Read()
+	dao.Client()
+	dao.AutoTables()
+	r := gin.Default()
+	controller.Router.InitApiRouter(r)
+	r.Run()
 }

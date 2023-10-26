@@ -23,9 +23,8 @@ type QuestionList struct {
 // Users 用户表
 type Users struct {
 	ID    uint   `gorm:"primaryKey;auto_increment" form:"id"`
-	Name  string `form:"name" binding:"required"`
-	Alias string `form:"alias" binding:"required"`
-	Score string `form:"score"`
+	Name  string `form:"name" binding:"required" gorm:"unique"`
+	Alias string `form:"alias" binding:"required" gorm:"unique"`
 }
 
 // Ranking 成绩表

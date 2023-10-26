@@ -15,7 +15,7 @@ type users struct {
 // CreateUsers 插入数据
 func (q *users) CreateUsers(ctx *gin.Context) {
 	var User dao.Users
-	if err := ctx.Bind(User); err != nil {
+	if err := ctx.Bind(&User); err != nil {
 		fmt.Println("Bind请求参数失败, " + err.Error())
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"msg":  err.Error(),

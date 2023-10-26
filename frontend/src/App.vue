@@ -1,27 +1,30 @@
 <template>
   <div class="common-layout">
     <el-container>
-      <el-header class="header" >Cave_CTF</el-header>
+<!--      顶部Header-->
+      <el-header class="header" >
+        <br>
+        Cave_CTF
+      </el-header>
       <el-container>
+<!--        左侧导航栏-->
         <el-aside class="aside" width="200px">
           <el-row class="tac">
             <el-col :span="24">
               <h5 style="text-align: left;padding-left: 25%" class="mb-2">导航栏</h5>
               <el-menu
-                  default-active="1"
+                  :default-active="activeMenuItem"
                   class="el-menu-vertical-demo"
-                  @open="handleOpen"
-                  @close="handleClose"
               >
-                <el-menu-item index="1">
+                <el-menu-item @click="question" index="1">
                   <el-icon><icon-menu /></el-icon>
                   <span>题目列表</span>
                 </el-menu-item>
-                <el-menu-item index="2">
+                <el-menu-item @click="ranking" index="2">
                   <el-icon><document /></el-icon>
                   <span>分数排行</span>
                 </el-menu-item>
-                <el-menu-item index="3">
+                <el-menu-item @click="users"  index="3">
                   <el-icon><setting /></el-icon>
                   <span>成员列表</span>
                 </el-menu-item>
@@ -29,6 +32,7 @@
             </el-col>
           </el-row>
         </el-aside>
+<!--        主要内容-->
         <el-main class="main">
           <router-view/>
         </el-main>
@@ -69,3 +73,27 @@ nav a.router-link-exact-active {
   height: 650px;
 }
 </style>
+
+<script>
+export default  {
+  data(){
+    return{
+      activeMenuItem:1,
+    }
+  },
+  methods: {
+    question() {
+      this.$router.push('/question')
+      this.activeMenuItem=1
+    },
+    ranking(){
+      this.$router.push('/ranking')
+      this.activeMenuItem=2
+    },
+    users(){
+      this.$router.push('/users')
+      this.activeMenuItem=3
+    },
+  }
+}
+</script>

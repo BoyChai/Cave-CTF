@@ -1,0 +1,68 @@
+<template>
+  <div>
+    <h3>分值统计</h3>
+    <el-row>
+      <el-col v-for="item in ranking" :key="item.user" :span="6">
+        <el-statistic :title="item.user" :value="item.score" />
+      </el-col>
+    </el-row>
+    <h3>分值历史</h3>
+    <div style="margin-top: 25px">
+      <el-table  :data="rankingList" style="width: 100%;">
+        <el-table-column prop="ID" label="ID" width="180" />
+        <el-table-column prop="User" label="User" width="180" />
+        <el-table-column prop="Score" label="Score" width="180" />
+        <el-table-column prop="QuestionTitle" label="QuestionTitle" />
+      </el-table>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "ranking",
+  data() {
+    return {
+      rankingList: [{"ID":1,"User":"test1","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test1","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test1","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test1","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test1","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test1","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test1","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test1","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test1","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test12","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test11","Score":"10","QuestionTitle":"test1"},{"ID":2,"User":"test1","Score":"10","QuestionTitle":"test2"},{"ID":3,"User":"test1","Score":"10","QuestionTitle":"test3"},{"ID":4,"User":"test2","Score":"10","QuestionTitle":"test1"},{"ID":5,"User":"test3","Score":"10","QuestionTitle":"test2"},{"ID":6,"User":"test3","Score":"20","QuestionTitle":"test4"},{"ID":7,"User":"test4","Score":"10","QuestionTitle":"test1"}],
+      ranking: [],
+
+    }
+  },
+  methods: {
+    summary() {
+      for (let i = 0; i < this.rankingList.length; i++) {
+        const user = this.rankingList[i].User;
+        const score = parseInt(this.rankingList[i].Score, 10); // 将字符串转换为整数
+
+        if (!isNaN(score)) { // 检查是否成功转换为数字
+          let userExists = false;
+          for (let j = 0; j < this.ranking.length; j++) {
+            if (this.ranking[j].user === user) {
+              this.ranking[j].score += score;
+              userExists = true;
+              break;
+            }
+          }
+          if (!userExists) {
+            this.ranking.push({ user, score });
+          }
+        }
+      }
+      this.ranking.sort((a, b) => b.score - a.score);
+      console.log(this.ranking)
+    },
+  },
+  created() {
+    this.rankingList.reverse()
+    this.summary();
+  },
+}
+</script>
+
+<style scoped>
+.el-col {
+  text-align: center;
+  margin-top: 15px;
+}
+
+</style>

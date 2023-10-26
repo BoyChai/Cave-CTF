@@ -1,5 +1,5 @@
 <template>
-  <div class="common-layout">
+  <div v-if="loginStatus" class="common-layout">
     <el-container>
 <!--      顶部Header-->
       <el-header class="header" >
@@ -39,6 +39,35 @@
       </el-container>
     </el-container>
   </div>
+
+  <div v-if="!loginStatus">
+    <div v-if="loginSwitch">
+      <div class="form-container">
+        <!-- 登录表单 -->
+        <div class="form">
+          <h3>Cave-CTF</h3>
+          <el-input v-model="login" class="input" placeholder="请输入用户名" />
+          <el-input v-model="password" class="input" type="password" placeholder="请输入密码" />
+          <el-button class="btn" @click="login">登录</el-button>
+        </div>
+      </div>
+    </div>
+    <div v-else>
+      <div class="form-container">
+        <!-- 注册表单 -->
+        <div class="form">
+          <h3>Cave-CTF</h3>
+          <el-input v-model="name" class="input" placeholder="请输入用户名" />
+          <el-input v-model="email" class="input" placeholder="请输入邮箱" />
+          <el-input v-model="password" class="input" type="password" placeholder="请输入密码" />
+          <el-button class="btn" @click="register">注册</el-button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <el-button @click="toggleForm">{{ loginSwitch ? '切换到注册' : '切换到登录' }}</el-button>
+    </div>
+  </div>
 </template>
 
 <style>
@@ -72,13 +101,42 @@ nav a.router-link-exact-active {
   border: 1px red solid;
   height: 650px;
 }
+.form-container {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   height: 90vh;
+ }
+
+.form {
+  text-align: center;
+  width: 300px;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+}
+
+.input {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.btn {
+  width: 100%;
+}
 </style>
 
 <script>
 export default  {
   data(){
     return{
+      login: "",
+      name: "",
+      pass:"",
       activeMenuItem:1,
+      loginStatus:false,
+      loginSwitch:true,
     }
   },
   methods: {

@@ -16,15 +16,19 @@
                   :default-active="activeMenuItem"
                   class="el-menu-vertical-demo"
               >
-                <el-menu-item @click="question" index="1">
+                <el-menu-item @click="home" index="1">
+                  <el-icon><icon-menu /></el-icon>
+                  <span>赛场信息</span>
+                </el-menu-item>
+                <el-menu-item @click="question" index="2">
                   <el-icon><icon-menu /></el-icon>
                   <span>题目列表</span>
                 </el-menu-item>
-                <el-menu-item @click="ranking" index="2">
+                <el-menu-item @click="ranking" index="3">
                   <el-icon><document /></el-icon>
                   <span>分数排行</span>
                 </el-menu-item>
-                <el-menu-item @click="users"  index="3">
+                <el-menu-item @click="users"  index="4">
                   <el-icon><setting /></el-icon>
                   <span>成员列表</span>
                 </el-menu-item>
@@ -123,17 +127,21 @@ export default  {
     }
   },
   methods: {
+    home() {
+      this.$router.push('/')
+      this.activeMenuItem=1
+    },
     question() {
       this.$router.push('/question')
-      this.activeMenuItem=1
+      this.activeMenuItem=2
     },
     ranking(){
       this.$router.push('/ranking')
-      this.activeMenuItem=2
+      this.activeMenuItem=3
     },
     users(){
       this.$router.push('/users')
-      this.activeMenuItem=3
+      this.activeMenuItem=4
     },
     login() {
         if (this.name === '' || this.alias === '') {

@@ -1,16 +1,14 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import axios from "axios";
 
 const routes = [
-  // {
-  //   path: '/',
-  //   name: 'home',
-  //   component: HomeView
-  // },
+  {
+    path: '/',
+    name: 'home',
+    component: () => import(/* webpackChunkName: "about" */ '../views/home.vue')
+  },
   {
     path: '/question',
-    name: 'home',
+    name: 'question',
     component: () => import(/* webpackChunkName: "about" */ '../views/question.vue')
   },
   {

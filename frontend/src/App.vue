@@ -41,33 +41,16 @@
   </div>
 
   <div v-if="!loginStatus">
-    <div v-if="loginSwitch">
-      <div class="form-container">
-        <!-- 登录表单 -->
-        <div class="form">
-          <h3>Cave-CTF</h3>
-          <el-input v-model="login" class="input" placeholder="请输入用户名" />
-          <el-input v-model="password" class="input" type="password" placeholder="请输入密码" />
-          <el-button class="btn" @click="login">登录</el-button>
-        </div>
+    <div class="form-container">
+      <!-- 注册表单 -->
+      <div class="form">
+        <h3>Cave-CTF</h3>
+        <el-input v-model="name" class="input" placeholder="请输入真实姓名" />
+        <el-input v-model="alias" class="input" placeholder="请输入别名" />
+        <el-button class="btn" @click="login">登录/注册</el-button>
       </div>
     </div>
-    <div v-else>
-      <div class="form-container">
-        <!-- 注册表单 -->
-        <div class="form">
-          <h3>Cave-CTF</h3>
-          <el-input v-model="name" class="input" placeholder="请输入用户名" />
-          <el-input v-model="email" class="input" placeholder="请输入邮箱" />
-          <el-input v-model="password" class="input" type="password" placeholder="请输入密码" />
-          <el-button class="btn" @click="register">注册</el-button>
-        </div>
-      </div>
     </div>
-    <div>
-      <el-button @click="toggleForm">{{ loginSwitch ? '切换到注册' : '切换到登录' }}</el-button>
-    </div>
-  </div>
 </template>
 
 <style>
@@ -128,15 +111,15 @@ nav a.router-link-exact-active {
 </style>
 
 <script>
+import axios from 'axios';
+
 export default  {
   data(){
     return{
-      login: "",
       name: "",
-      pass:"",
+      alias:"",
       activeMenuItem:1,
       loginStatus:false,
-      loginSwitch:true,
     }
   },
   methods: {
@@ -152,6 +135,52 @@ export default  {
       this.$router.push('/users')
       this.activeMenuItem=3
     },
+    login() {
+        if (this.name === '' || this.alias === '') {
+          this.$message({
+            message: '用户名和别名不允许为空',
+            type: 'warning'
+          });
+          return
+        }
+        axios.get("/check/user",{
+          params:{
+            name: this.name,
+            alias: this.alias
+          }
+        }).then(
+            res => {
+              //请求成功执行
+              this.loginStatus=true
+              document.cookie = "name="+this.name+"; alias="+this.alias
+            }
+        ).catch(error => {
+          //请求失败执行
+          this.$message({
+            message: '用户未注册,帮您创建用户',
+            type: 'info'
+          });
+          axios.post("/create/user",{
+            name:this.name,
+            alias: this.alias
+          }).then(r=>{
+            this.loginStatus = true
+            document.cookie = "name="+this.name+"; alias="+this.alias
+          }).catch(e =>{
+            this.$message({
+              message:"登录/注册失败，请联系管理员",
+              type:"error",
+            })
+          })
+        })
+    },
+  },
+  created() {
+    if (document.cookie === '') {
+      return
+    }
+    this.loginStatus = true
+    console.log(document.cookie)
   }
 }
 </script>

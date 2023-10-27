@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import axios from "axios";
 
 const routes = [
   // {
@@ -34,5 +35,9 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes
 })
+// router.beforeEach((to,from,next) => {
+//   var cookie = document.cookie;
+// })
+
 
 export default router

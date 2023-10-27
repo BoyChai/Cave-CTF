@@ -19,17 +19,32 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "ranking",
   data() {
     return {
-      rankingList: [{"ID":1,"User":"test1","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test1","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test1","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test1","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test1","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test1","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test1","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test1","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test1","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test12","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test11","Score":"10","QuestionTitle":"test1"},{"ID":2,"User":"test1","Score":"10","QuestionTitle":"test2"},{"ID":3,"User":"test1","Score":"10","QuestionTitle":"test3"},{"ID":4,"User":"test2","Score":"10","QuestionTitle":"test1"},{"ID":5,"User":"test3","Score":"10","QuestionTitle":"test2"},{"ID":6,"User":"test3","Score":"20","QuestionTitle":"test4"},{"ID":7,"User":"test4","Score":"10","QuestionTitle":"test1"}],
+      rankingList: [],
+      // rankingList: [{"ID":1,"User":"test1","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test1","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test1","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test1","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test1","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test1","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test1","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test1","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test1","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test12","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test11","Score":"10","QuestionTitle":"test1"},{"ID":2,"User":"test1","Score":"10","QuestionTitle":"test2"},{"ID":3,"User":"test1","Score":"10","QuestionTitle":"test3"},{"ID":4,"User":"test2","Score":"10","QuestionTitle":"test1"},{"ID":5,"User":"test3","Score":"10","QuestionTitle":"test2"},{"ID":6,"User":"test3","Score":"20","QuestionTitle":"test4"},{"ID":7,"User":"test4","Score":"10","QuestionTitle":"test1"}],
       ranking: [],
 
     }
   },
   methods: {
+    getRankingList() {
+      axios.get("/get/ranking").then(r =>{
+        this.rankingList = []
+        this.rankingList = r.data.data
+        this.summary()
+      }).catch(e=>{
+        this.$message({
+          message:"获取分数列表出现错误",
+          type:"error"
+        })
+      })
+    },
     summary() {
+      this.ranking = []
       for (let i = 0; i < this.rankingList.length; i++) {
         const user = this.rankingList[i].User;
         const score = parseInt(this.rankingList[i].Score, 10); // 将字符串转换为整数
@@ -49,12 +64,14 @@ export default {
         }
       }
       this.ranking.sort((a, b) => b.score - a.score);
+      console.log(2)
       console.log(this.ranking)
     },
   },
   created() {
+    this.getRankingList()
     this.rankingList.reverse()
-    this.summary();
+    setInterval(this.getRankingList, 2000);
   },
 }
 </script>

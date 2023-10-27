@@ -13,7 +13,7 @@
       <br>
       <br>
       <br>
-      <div style="color: green">
+      <div v-if="isCompleted(item)" style="color: green">
         已完成
         <el-icon><Select /></el-icon>
       </div>
@@ -38,8 +38,12 @@
 <!--        <el-button type="primary" @click="dialogVisible = false">-->
 <!--          Confirm-->
 <!--        </el-button>-->
-        <el-input style="width: 82%" v-model="flag" placeholder="flag格式为flag{}" />
-        <el-button style="margin-left: 5px" @click="putFlag" type="primary">提交</el-button>
+        <el-input v-if="!isCompleted(question)" style="width: 82%" v-model="flag" placeholder="flag格式为flag{}" />
+        <el-button v-if="!isCompleted(question)" style="margin-left: 5px" @click="putFlag" type="primary">提交</el-button>
+        <div v-if="isCompleted(question)" style="color: green">
+         已完成
+         <el-icon><Select /></el-icon>
+        </div>
       </span>
     </template>
   </el-dialog>
@@ -52,12 +56,20 @@ export default {
   data() {
     return {
       question: "",
-      // questionList:[{"ID":1,"Title":"test1","Describe":"我要flag我要flag我要flag我要flag我要flag我要flag我要","Flag":"flag{123}","Type":"1","Annex":"http://test.etst/11.txt","Score":"10"},{"ID":2,"Title":"test2","Describe":"快给我flag","Flag":"flag{1234}","Type":"1","Annex":"http://test.etst/11.txt","Score":"10"},{"ID":1,"Title":"test3","Describe":"我要flag","Flag":"flag{123}","Type":"1","Annex":"http://test.etst/11.txt","Score":"10"},{"ID":1,"Title":"test1","Describe":"我要flag","Flag":"flag{123}","Type":"1","Annex":"http://test.etst/11.txt","Score":"10"},{"ID":1,"Title":"test1","Describe":"我要flag","Flag":"flag{123}","Type":"1","Annex":"http://test.etst/11.txt","Score":"10"},],
       questionList:[],
       dialogVisible: false,
       flag:"",
       personalRanking:[],
+      userRecords:[],
     }
+  },
+  computed: {
+    // 计算属性，用于判断题目是否已完成
+    isCompleted: function () {
+      return (question) => {
+        return this.userRecords.some((record) => record.QuestionTitle === question.Title);
+      };
+    },
   },
   methods:{
     openQuestion(question) {
@@ -76,6 +88,8 @@ export default {
           message:"提交成功",
           type:"success"
         })
+        this.getQuestion()
+        this.getPersonalRanking()
         this.dialogVisible=false
       }).catch(e => {
         console.log(e)
@@ -88,11 +102,14 @@ export default {
     getQuestion() {
       axios.get("/get/questionlist").then(res=>{
         this.questionList=res.data.data;
+        console.log(this.questionList)
       })
     },
     getPersonalRanking() {
       axios.get("/get/personal/ranking?alias="+this.getCookieValue("alias")).then(res=>{
         this.personalRanking=res.data.data;
+        this.userRecords=res.data.data;
+        console.log(this.personalRanking)
       })
     },
     getCookieValue(cookieName) {

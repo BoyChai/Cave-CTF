@@ -11,25 +11,25 @@
         <el-aside class="aside" width="200px">
           <el-row class="tac">
             <el-col :span="24">
-              <h5 style="text-align: left;padding-left: 25%" class="mb-2">导航栏</h5>
+              <h5 style="text-align: left;padding-left: 30%" class="mb-2">导航栏</h5>
               <el-menu
                   :default-active="activeMenuItem"
                   class="el-menu-vertical-demo"
               >
                 <el-menu-item @click="home" index="1">
-                  <el-icon><icon-menu /></el-icon>
+                  <el-icon><Comment /></el-icon>
                   <span>赛场信息</span>
                 </el-menu-item>
                 <el-menu-item @click="question" index="2">
-                  <el-icon><icon-menu /></el-icon>
+                  <el-icon><Notification /></el-icon>
                   <span>题目列表</span>
                 </el-menu-item>
                 <el-menu-item @click="ranking" index="3">
-                  <el-icon><document /></el-icon>
+                  <el-icon><Finished /></el-icon>
                   <span>分数排行</span>
                 </el-menu-item>
                 <el-menu-item @click="users"  index="4">
-                  <el-icon><setting /></el-icon>
+                  <el-icon><UserFilled /></el-icon>
                   <span>成员列表</span>
                 </el-menu-item>
               </el-menu>
@@ -160,7 +160,7 @@ export default  {
             res => {
               //请求成功执行
               this.loginStatus=true
-              document.cookie = "name="+this.name+"; alias="+this.alias
+              document.cookie = "alias=" + this.alias;
             }
         ).catch(error => {
           //请求失败执行
@@ -173,7 +173,7 @@ export default  {
             alias: this.alias
           }).then(r=>{
             this.loginStatus = true
-            document.cookie = "name="+this.name+"; alias="+this.alias
+            document.cookie = "alias=" + this.alias;
           }).catch(e =>{
             this.$message({
               message:"登录/注册失败，请联系管理员",
@@ -182,8 +182,10 @@ export default  {
           })
         })
     },
+
   },
   created() {
+
     if (document.cookie === '') {
       return
     }

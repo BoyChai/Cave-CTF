@@ -8,7 +8,7 @@
     </el-row>
     <h3>分值历史</h3>
     <div style="margin-top: 25px">
-      <el-table  :data="rankingList" style="width: 100%;">
+      <el-table sortable="custom"  :data="rankingList" style="width: 100%;">
         <el-table-column prop="ID" label="ID" width="180" />
         <el-table-column prop="User" label="User" width="180" />
         <el-table-column prop="Score" label="Score" width="180" />
@@ -25,8 +25,8 @@ export default {
   data() {
     return {
       rankingList: [],
-      // rankingList: [{"ID":1,"User":"test1","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test1","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test1","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test1","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test1","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test1","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test1","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test1","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test1","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test12","Score":"10","QuestionTitle":"test1"},{"ID":1,"User":"test11","Score":"10","QuestionTitle":"test1"},{"ID":2,"User":"test1","Score":"10","QuestionTitle":"test2"},{"ID":3,"User":"test1","Score":"10","QuestionTitle":"test3"},{"ID":4,"User":"test2","Score":"10","QuestionTitle":"test1"},{"ID":5,"User":"test3","Score":"10","QuestionTitle":"test2"},{"ID":6,"User":"test3","Score":"20","QuestionTitle":"test4"},{"ID":7,"User":"test4","Score":"10","QuestionTitle":"test1"}],
       ranking: [],
+      intervalId: "",
 
     }
   },
@@ -64,15 +64,17 @@ export default {
         }
       }
       this.ranking.sort((a, b) => b.score - a.score);
-      console.log(2)
-      console.log(this.ranking)
+
     },
   },
   created() {
     this.getRankingList()
     this.rankingList.reverse()
-    setInterval(this.getRankingList, 2000);
+    this.intervalId =setInterval(this.getRankingList, 2000);
   },
+  beforeUnmount() {
+    clearInterval(this.intervalId);
+  }
 }
 </script>
 

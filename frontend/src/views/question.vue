@@ -39,7 +39,7 @@
 <!--          Confirm-->
 <!--        </el-button>-->
         <el-input v-if="!isCompleted(question)" style="width: 82%" v-model="flag" placeholder="flag格式为flag{}" />
-        <el-button v-if="!isCompleted(question)" style="margin-left: 5px" @click="putFlag" type="primary">提交</el-button>
+        <el-button v-if="!isCompleted(question)" style="margin-left: 5px" @click="putFlag" :disabled="buttonDisabled" type="primary">提交</el-button>
         <div v-if="isCompleted(question)" style="color: green">
          已完成
          <el-icon><Select /></el-icon>
@@ -61,6 +61,7 @@ export default {
       flag:"",
       personalRanking:[],
       userRecords:[],
+      buttonDisabled:false,
     }
   },
   computed: {
@@ -78,26 +79,39 @@ export default {
       this.dialogVisible=true
     },
     putFlag() {
-      axios.put("/put/flag",{
-        question_id: this.question.ID,
-        user:"test222",
-        score: this.question.Score,
-        flag: this.flag,
-      }).then(res => {
-        this.$message({
-          message:"提交成功",
-          type:"success"
+      if (!this.buttonDisabled) {
+        // 禁用按钮
+        this.buttonDisabled = true;
+
+        // 1秒后启用按钮
+        setTimeout(() => {
+          this.buttonDisabled = false;
+        }, 1000);
+        // 这里放置你的按钮点击后的逻辑
+        // 例如：执行一个函数或者触发一个事件
+        // 在这里添加你需要的逻辑
+        let alias;
+        alias=this.getCookieValue("alias")
+        axios.put("/put/flag",{
+          question_id: this.question.ID,
+          user: alias,
+          score: this.question.Score,
+          flag: this.flag,
+        }).then(res => {
+          this.$message({
+            message:"提交成功",
+            type:"success"
+          })
+          this.getQuestion()
+          this.getPersonalRanking()
+          this.dialogVisible=false
+        }).catch(e => {
+          this.$message({
+            message:e.response.data.msg,
+            type:"error"
+          })
         })
-        this.getQuestion()
-        this.getPersonalRanking()
-        this.dialogVisible=false
-      }).catch(e => {
-        console.log(e)
-        this.$message({
-          message:e.response.data.msg,
-          type:"error"
-        })
-      })
+      }
     },
     getQuestion() {
       axios.get("/get/questionlist").then(res=>{

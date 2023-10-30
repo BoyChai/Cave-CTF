@@ -16,6 +16,7 @@ export default {
   data() {
     return {
       data:[],
+      interval: "",
       // data:[{"ID":1,"Name":"test1","Score":"0"},{"ID":2,"Name":"tset2","Score":"1"},{"ID":3,"Name":"test3","Score":"1"}],
     }
   },
@@ -33,7 +34,10 @@ export default {
   },
   created() {
     this.getData()
-    setInterval(this.getData, 2000);
+    this.interval = setInterval(this.getData, 2000);
+
+  },beforeUnmount() {
+    clearInterval(this.interval);
 
   }
 }

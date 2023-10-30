@@ -18,7 +18,7 @@ func (d *dao) CreateUsers(user Users) error {
 	return nil
 }
 
-// PutFlag 创建用户
+// PutFlag 提交成绩
 func (d *dao) PutFlag(Flag Ranking) error {
 	tx := db.Create(&Flag)
 	if tx.Error != nil {

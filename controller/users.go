@@ -36,6 +36,7 @@ func (q *users) CreateUsers(ctx *gin.Context) {
 		"msg":  "插入数据成功",
 		"data": nil,
 	})
+
 }
 
 // DeleteUsers 删除数据
@@ -66,7 +67,36 @@ func (q *users) CreateUsers(ctx *gin.Context) {
 
 // QueryUsers 查询数据
 func (q *users) QueryUsers(ctx *gin.Context) {
-	err, lists := dao.Dao.FindUser()
+	err, lists := dao.Dao.FindUsers()
+	if err != nil {
+		fmt.Println("查询失败, " + err.Error())
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"msg":  err.Error(),
+			"data": nil,
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"msg":  "查询成功",
+		"data": lists,
+	})
+}
+
+func (q *users) CheckUsers(ctx *gin.Context) {
+	params := new(struct {
+		Name  string `form:"name" binding:"required"`
+		Alias string `form:"alias" binding:"required"`
+	})
+	if err := ctx.Bind(&params); err != nil {
+		fmt.Println("Bind请求参数失败, " + err.Error())
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"msg":  err.Error(),
+			"data": nil,
+		})
+		return
+	}
+	err, _ := dao.Dao.FindUser(params.Name, params.Alias)
 	if err != nil {
 		fmt.Println("查询失败, " + err.Error())
 		ctx.JSON(http.StatusInternalServerError, gin.H{
@@ -77,6 +107,6 @@ func (q *users) QueryUsers(ctx *gin.Context) {
 	}
 	ctx.JSON(http.StatusOK, gin.H{
 		"msg":  "查询成功",
-		"data": lists,
+		"data": true,
 	})
 }

@@ -75,6 +75,9 @@ func (q *questionList) QueryQuestion(ctx *gin.Context) {
 		})
 		return
 	}
+	for i := range lists {
+		lists[i].Flag = ""
+	}
 	ctx.JSON(http.StatusOK, gin.H{
 		"msg":  "查询成功",
 		"data": lists,

@@ -9,7 +9,7 @@ import (
 	"gorm.io/gorm/schema"
 )
 
-// 数据库链接
+// Client 数据库链接
 func Client() {
 	cfg := config.Config.DATA
 	var err error

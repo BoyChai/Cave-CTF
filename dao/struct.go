@@ -22,15 +22,25 @@ type QuestionList struct {
 
 // Users 用户表
 type Users struct {
-	ID    uint   `gorm:"primaryKey;auto_increment" form:"id"`
-	Name  string `form:"name" binding:"required" gorm:"unique"`
+	ID uint `gorm:"primaryKey;auto_increment" form:"id"`
+	//Name  string `form:"name" binding:"required" gorm:"unique"`
+	Name  string `form:"name" binding:"required"`
 	Alias string `form:"alias" binding:"required" gorm:"unique"`
 }
 
+// // Ranking 成绩表
+//
+//	type Ranking struct {
+//		ID            uint   `json:"ID,omitempty;auto_increment" form:"id"`
+//		User          string `form:"user" binding:"required"`
+//		Score         string `form:"score" binding:"required"`
+//		QuestionTitle string `form:"question" binding:"required"`
+//	}
+//
 // Ranking 成绩表
 type Ranking struct {
 	ID            uint   `json:"ID,omitempty;auto_increment" form:"id"`
 	User          string `form:"user" binding:"required"`
 	Score         string `form:"score" binding:"required"`
-	QuestionTitle string `form:"question" binding:"required"`
+	QuestionTitle string `form:"question" binding:"required" gorm:"unique_index"`
 }

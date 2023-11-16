@@ -28,7 +28,8 @@
     <span>{{question.Describe}}</span>
     <br>
     <br>
-    <a target="_blank" :href="question.Annex">下载附件</a>
+    <a v-if="question.Type==1" target="_blank" :href="question.Annex">下载附件</a>
+    <a v-else-if="question.Type==2" target="_blank" :href="question.Annex">{{ question.Annex }}</a>
     <br>
     <br>
 
@@ -51,8 +52,10 @@
 
 <script>
 import axios from "axios";
+import {QuestionFilled} from "@element-plus/icons-vue";
 export default {
   name: "question",
+  components: {QuestionFilled},
   data() {
     return {
       question: "",

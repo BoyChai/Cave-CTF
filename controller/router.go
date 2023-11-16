@@ -19,7 +19,7 @@ func (r *router) InitApiRouter(router *gin.Engine) {
 		PUT("/put/flag", Flag.PutFlag).
 		// Create API
 		POST("/create/question", QuestionList.CreateQuestion).
-		POST("/create/user", Users.CreateUsers).
+		//POST("/create/user", Users.CreateUsers).
 		// Check API
 		GET("/check/user", Users.CheckUsers)
 }

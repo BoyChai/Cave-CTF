@@ -12,6 +12,8 @@
       {{item.Describe}}
       <br>
       <br>
+      {{item.Score}}分
+      <br>
       <br>
       <div v-if="isCompleted(item)" style="color: green">
         已完成

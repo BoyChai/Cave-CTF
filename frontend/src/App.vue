@@ -5,7 +5,7 @@
       <el-header class="header" >
         <br>
 <!--        Cave_CTF-->
-        山东化工职业技术学院第一届CTF比赛
+        山东化工职业学院第一届CTF比赛
       </el-header>
       <el-container>
 <!--        左侧导航栏-->
@@ -50,7 +50,7 @@
       <!-- 注册表单 -->
       <div class="form">
 <!--        <h3>Cave-CTF</h3>-->
-        <h3>山东化工职业技术学院第一届CTF比赛</h3>
+        <h3>山东化工职业学院第一届CTF比赛</h3>
         <el-input v-model="name" class="input" placeholder="请输入真实姓名" />
         <el-input v-model="alias" class="input" placeholder="请输入别名" />
         <el-button class="btn" @click="login">登录/注册</el-button>
@@ -187,7 +187,7 @@ export default  {
 
   },
   created() {
-    document.title="山东化工职业技术学院第一届CTF比赛"
+    document.title="山东化工职业学院第一届CTF比赛"
     if (document.cookie === '') {
       return
     }
